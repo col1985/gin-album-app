@@ -2,9 +2,9 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: {{ include "chart.fullname" . }}
+  name: {{ include "gin-album-app-chart.fullname" . }}
   labels:
-    {{- include "chart.labels" . | nindent 4 }}
+    {{- include "gin-album-app-chart.labels" . | nindent 4 }}
 spec:
   host: {{ .Values.route.path }}
   port:
