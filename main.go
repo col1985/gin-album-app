@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // album represents data about a record album.
@@ -16,27 +18,30 @@ type album struct {
 
 // albums slice to seed record album data.
 var albums = []album{
-    {ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
-    {ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
-    {ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
+    {ID: "1", Title: "2001", Artist: "Dr. Dre", Price: 56.99},
+    {ID: "2", Title: "Rumours", Artist: "Fleetwood Mac", Price: 67.99},
+    {ID: "3", Title: "Dark side of the Moon", Artist: "Pink Floyd", Price: 39.99},
+    {ID: "4", Title: "Songs from the Dead", Artist: "Queens of the Stone Age", Price: 56.99},
+    {ID: "5", Title: "Foo Fighters", Artist: "Foo Fighters", Price: 30.99},
 }
 
 func main() {
     router := gin.Default()
-    router.GET("/", getStatus)
+    router.GET("/ping", getStatus)
+    router.GET("/metrics", gin.WrapH(promhttp.Handler()))
     router.GET("/albums", getAlbums)
     router.GET("/albums/:id", getAlbumByID)
     router.POST("/albums", postAlbums)
 
-		err := router.Run(":8080")
-		if err != nil {
-			println("Unable to start router.")
-			return
-		}
+    err := router.Run(":8080")
+    if err != nil {
+        println("Unable to start router.")
+        return
+    }
 }
 
 func getStatus(c *gin.Context) {
-    c.IndentedJSON(http.StatusOK, "")
+    c.IndentedJSON(http.StatusOK, "pong")
 }
 
 // getAlbums responds with the list of all albums as JSON.
