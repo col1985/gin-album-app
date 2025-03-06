@@ -1,0 +1,77 @@
+basePath: /api/v1
+definitions:
+  main.Album:
+    properties:
+      artist:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: col1985@gmail.com
+    name: Colum Bennett
+  description: This is a basic Gin API app for demos.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Gin Album Demo API
+  version: "1.0"
+paths:
+  /albums:
+    get:
+      description: Get List of Albums
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Album'
+            type: array
+      summary: Get List of Albums Endpoint
+      tags:
+      - Albums List
+    post:
+      description: Add a new album to list of Albums
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Album'
+      summary: Create a new album
+      tags:
+      - Albums List
+  /albums/:id:
+    get:
+      description: Get an album from the list using ID property
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Album'
+      summary: Get Album by ID
+      tags:
+      - Albums
+  /sys/ping:
+    get:
+      description: Get status response of app
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: System Health Endpoint
+      tags:
+      - System Ping
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

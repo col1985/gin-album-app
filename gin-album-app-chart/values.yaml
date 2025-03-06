@@ -23,6 +23,9 @@ imagePullSecrets: []
 nameOverride: "gin-album-app"
 fullnameOverride: ""
 
+appConfig:
+  ginMode: "release"
+
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # Specifies whether a service account should be created
@@ -95,11 +98,11 @@ resources:
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /ping
+    path: /sys/ping
     port: http
 readinessProbe:
   httpGet:
-    path: /ping
+    path: /sys/ping
     port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
